@@ -6,6 +6,6 @@ eleventyNavigation:
   title: About Me
   order: 3
 ---
-# About Me
+## About Me
 
 I am a person that writes stuff.

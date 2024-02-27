@@ -26,21 +26,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
+        id: setup
         uses: actions/configure-pages@v4
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
+      - name: Checkout Static Site Generator
+        uses: actions/checkout@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build
-        uses: docker://ghcr.io/mykolabilyi/blog-ssg:latest
-        # with:
-        #   source: ./
-        #   destination: ./_site
+          repository: MykolaBilyi/blog-ssg
+          token: ${{ secrets.SSG_ACCESS_TOKEN }}
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          path: ./.github/actions/blog
+      - name: Copy content
+        run: |
+          cp -rf ./.github/actions/blog/* ./content
+      - name: Update metadata
+        run: |
+          echo '{"url":"${steps.setup.outputs.base_url}"}' > ./_data/metadata.json
+      - name: Eleventy Action
+        uses: TartanLlama/actions-eleventy@v1.3
+        with:
+          args: --output _site
+          install_dependencies: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 

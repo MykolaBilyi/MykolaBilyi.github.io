@@ -1,0 +1,15 @@
+{
+	"tags": [
+		"posts"
+	],
+	"layout": "post",
+	"eleventyNavigation": {
+		"parent": "blog"
+	},
+	"eleventyComputed": {
+		"eleventyNavigation": {
+			"key": "{{ page.fileSlug }}"
+		},
+		"self": "{{ page.fileSlug }}" 
+	}
+}
