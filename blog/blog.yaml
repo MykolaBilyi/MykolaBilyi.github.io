@@ -1,0 +1,9 @@
+tags:
+  - posts
+layout: article
+eleventyNavigation:
+  parent: blog
+eleventyComputed:
+  eleventyNavigation:
+    key: "{{ page.fileSlug }}"
+  self: "{{ page.fileSlug }}"

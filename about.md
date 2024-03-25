@@ -1,10 +1,12 @@
 ---
-layout: layouts/base.njk
+layout: page
 eleventyNavigation:
-  parent: "~"
-  key: about
+  key: "~"
   title: About Me
   order: 3
+  hide: true
+draft: true
+self: "~"
 ---
 ## About Me
 

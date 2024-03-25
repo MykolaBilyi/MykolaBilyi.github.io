@@ -41,16 +41,19 @@ jobs:
       - name: Copy content
         run: |
           cp -rf ./.github/actions/blog/* ./content
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
       - name: Update metadata
         run: |
-          echo '{"url":"${steps.setup.outputs.base_url}"}' > ./_data/metadata.json
-      - name: Eleventy Action
-        uses: TartanLlama/actions-eleventy@v1.3
-        with:
-          args: --output _site
-          install_dependencies: true
+          echo '{"url":"${steps.setup.outputs.base_url}"}' > ./data/metadata.json
+      - run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
 
   # Deployment job
   deploy:
